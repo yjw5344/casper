@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>       
+    <style>
+        #panorama {
+            width: 1000px;
+            height: 400px;
+        }
+    </style>
+    
+    <title>Document</title>
+</head>
+<body>
+    <!-- <img src="./img/360.jpg"> -->
+    <div id="panorama"></div>
+    
+    <script>
+        var img = new Image();
+        // img.crossOrigin = ""
+        img.src = "./img/360.jpg";
+
+            
+        pannellum.viewer('panorama', {
+            
+            "autoLoad": true,
+            "panorama": img.src
+        });
+
+        
+    </script>
+    
+</body>
+</html>

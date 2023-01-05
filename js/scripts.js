@@ -1,6 +1,9 @@
 let currentColor = '';
+let view = 0; // 0:외장, 1: 내장
 let sec = 0.00;
 let min = 0;
+// let videoWidth;
+// let videoHeight;
 
 const video = document.getElementById('confiqurator');
 
@@ -8,19 +11,31 @@ window.onload = function() {
     currentColor = 'blue';
     document.getElementById('blue').style.backgroundColor = '#b22222';
     document.getElementById('blue').style.pointerEvents = 'none';
-    document.getElementById('confiqurator').play();    
+    document.getElementById('confiqurator').play();
+
+    let videoWidth = document.getElementById("confiqurator").clientWidth;
+    let videoHeight = document.getElementById("confiqurator").clientHeight;
+    document.getElementById("panorama").style.width = videoWidth + 'px';
+    document.getElementById("panorama").style.height = videoHeight + 'px';
+
+    document.getElementById("panorama").style.display = "none";
+    load360();
 }
 
 // 마우스 클릭 이벤트
-// function toggleVideoStatus(e) {    
-//     if (video.paused) {        
-//         video.play();   // play() 영상 재생하는 메서드
-//     } else {
-//         video.pause();  // pause() 영상 중지하는 메서드        
-//     }
-// }
+function toggleVideoStatus(e) {    
+    if (video.paused) {        
+        video.play();   // play() 영상 재생하는 메서드
+    } else {
+        video.pause();  // pause() 영상 중지하는 메서드        
+    }
+}
 
-// video.addEventListener("click", toggleVideoStatus);
+video.addEventListener("click", toggleVideoStatus);
+// video.addEventListener("click", () => {
+//     video.currentTime = 72.08;
+//     video.pause();
+// });
 
 video.addEventListener("timeupdate", (e) => {
     sec = (e.target.currentTime % 60).toFixed(2);
@@ -33,7 +48,7 @@ video.addEventListener("timeupdate", (e) => {
             video.currentTime = 0;            
         }
     } else if (currentColor =='white') {
-        if (sec >= 47.70) {        
+        if (sec >= 47.80) {        
             console.log(sec);
             video.currentTime = 24.10;            
         }
@@ -52,14 +67,14 @@ video.addEventListener("timeupdate", (e) => {
     // document.getElementById('time').innerHTML = e.target.currentTime;
 });
 
+// 마우스 오버 이벤트
+// video.addEventListener('mouseover', function(){
+//     video.pause();
+// });
 
-video.addEventListener('mouseover', function(){
-    video.pause();
-});
-
-video.addEventListener('mouseout', function(){
-    video.play();
-});
+// video.addEventListener('mouseout', function(){
+//     video.play();
+// });
 
 // 색상 변경 이벤트
 document.getElementById("blue").addEventListener('click',() => {
@@ -69,14 +84,22 @@ document.getElementById("blue").addEventListener('click',() => {
 
     let addtimer = 0;
     if (currentColor == 'white') {
-        addtimer = -24;
+        addtimer = -24.01;
     } else if( currentColor == 'orange') {
-        addtimer = -48;
+        addtimer = -48.05;
     } else if( currentColor == 'grey') {
         addtimer = -71.9;
     }
     
     video.currentTime = (min*60) + parseFloat(sec) + addtimer;
+
+    if( view == 1) {
+        document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
+        document.getElementById('interior').style.pointerEvents = 'auto';
+        document.getElementById("confiqurator").style.display = "flex";
+        document.getElementById("panorama").style.display = "none";
+        view = 0;
+    }
 
     currentColor = 'blue';
 });
@@ -89,14 +112,22 @@ document.getElementById("white").addEventListener('click',(e) => {
 
     let addtimer = 0;
     if (currentColor == 'blue') {
-        addtimer = 24.1;
+        addtimer = 24.02;
     } else if( currentColor == 'orange') {
         addtimer = -24;
     } else if( currentColor == 'grey') {
-        addtimer = -48;
+        addtimer = -48.90;
     }
     
     video.currentTime = (min*60) + parseFloat(sec) + addtimer;
+
+    if( view == 1) {
+        document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
+        document.getElementById('interior').style.pointerEvents = 'auto';
+        document.getElementById("confiqurator").style.display = "flex";
+        document.getElementById("panorama").style.display = "none";
+        view = 0;
+    }
     
     currentColor = 'white';
 });
@@ -109,14 +140,22 @@ document.getElementById("orange").addEventListener('click',() => {
 
     let addtimer = 0;
     if (currentColor == 'blue') {
-        addtimer = 48.1;
+        addtimer = 48.05;
     } else if( currentColor == 'white') {
-        addtimer = 24;
+        addtimer = 24.1;
     } else if( currentColor == 'grey') {
         addtimer = -24;
     }
     
     video.currentTime = (min*60) + parseFloat(sec) + addtimer;
+
+    if( view == 1) {
+        document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
+        document.getElementById('interior').style.pointerEvents = 'auto';
+        document.getElementById("confiqurator").style.display = "flex";
+        document.getElementById("panorama").style.display = "none";
+        view = 0;
+    }
 
     currentColor = 'orange';
 });
@@ -125,21 +164,55 @@ document.getElementById("grey").addEventListener('click',() => {
     document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
     document.getElementById(currentColor).style.pointerEvents = 'auto';
     document.getElementById('grey').style.backgroundColor = '#b22222';
-    document.getElementById('grey').style.pointerEvents = 'none';
+    document.getElementById('grey').style.pointerEvents = 'none';    
 
     let addtimer = 0;
     if (currentColor == 'blue') {
-        addtimer = 72.2;
+        // addtimer = 72.07;
+        addtimer = 71.05;
     } else if( currentColor == 'white') {
-        addtimer = 48;
+        addtimer = 47.8;
     } else if( currentColor == 'orange') {
         addtimer = 24;
     }
 
     video.currentTime = (min*60) + parseFloat(sec) + addtimer;
 
+    if( view == 1) {
+        document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
+        document.getElementById('interior').style.pointerEvents = 'auto';
+        document.getElementById("confiqurator").style.display = "flex";
+        document.getElementById("panorama").style.display = "none";
+        view = 0;
+    }
+
     currentColor = 'grey';
+
 });
+
+document.getElementById("interior").addEventListener('click',(e) => {
+    document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+    document.getElementById(currentColor).style.pointerEvents = 'auto';
+    document.getElementById('interior').style.backgroundColor = '#b22222';
+    document.getElementById('interior').style.pointerEvents = 'none';
+
+    document.getElementById("confiqurator").style.display = "none";    
+    document.getElementById("panorama").style.display = "flex";
+    load360();
+
+    view = 1;    
+});
+
+//panorama
+function load360() {
+    var img = new Image();    
+    img.src = "./img/360.jpg";
+
+    pannellum.viewer('panorama', {               
+        "autoLoad": true,
+        "panorama": img.src,    
+    });
+}
 
 
 /* 시간 정리
@@ -149,11 +222,12 @@ document.getElementById("grey").addEventListener('click',() => {
 01:12:30 ~ 01:36 그레이(24초) 티탄 그레이 메탈릭 ( https://casper.hyundai.com/wcontents/repn-car/side-45/AX01/exterior/R4G/colorchip-exterior.png )
 
 시작점/끝점
-블루 > 00:00 24:00
-흰색 > 24:10 48:00
-오렌지 > 48:10 1:12:00
-그레이 > 1:12:10 1:36:00
+블루 > 00:00 24:02 >> 24:02
+흰색 > 24:03 48:04 >> 24:01
+오렌지 > 48:05 1:12:07 >> 24:02
+그레이 > 1:12:08 1:36:00 >> 23:02
 
 문제점 : timeStamp가 0.26~0.27초에 한번씩 찍음   
 */
+
 

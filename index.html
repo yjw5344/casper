@@ -14,28 +14,23 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
         <!-- video.js -->
-        <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-
+        <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />        
+        <!-- parano -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     </head>
     <body>
         <!-- Confiqurator-->
         <section class="page-section" id="team">
             <div class="container">
-                <video id="confiqurator" autoplay muted loop>
-                    <!-- <source src="./video/AX-00000.mp4" ype="video/mp4"> -->
-                    <source src="https://firebasestorage.googleapis.com/v0/b/casper-69f6e.appspot.com/o/AX-00000.mp4?alt=media&token=2efeda4c-a243-4497-909e-db184ab8daf3" ype="video/mp4">                    
-                </video>
-
-                <!-- <video id="my-video" class="video-js" controls preload="auto" data-setup="{}">
-                    <source src="./video/AX-00000.mp4" type="video/mp4" />
-                    <source src="MY_VIDEO.webm" type="video/webm" />
-                    <p class="vjs-no-js">
-                        To view this video please enable JavaScript, and consider upgrading to a
-                        web browser that
-                        <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                    </p>
-                </video> -->
-
+                <div id="player">
+                    <video id="confiqurator" autoplay muted loop>
+                        <source src="./video/AX-00000.mp4" ype="video/mp4">
+                        <!-- <source src="https://firebasestorage.googleapis.com/v0/b/casper-69f6e.appspot.com/o/AX-00000.mp4?alt=media&token=2efeda4c-a243-4497-909e-db184ab8daf3" ype="video/mp4">                     -->                    
+                    </video>                    
+                    <div id="panorama"></div>
+                </div>
+                
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="team-member">
@@ -61,19 +56,22 @@
                             <h4>티탄 그레이 메탈릭</h4>                            
                         </div>
                     </div>
+                    <div class="col-lg-4">
+                        <div class="team-member">
+                            <img id="interior" class="mx-auto rounded-circle" src="https://casper.hyundai.com/wcontents/repn-car/side-45/AX01/interior/NNB/colorchip-interior.png" alt="..." style="-webkit-user-drag: none;"/>
+                            <h4>내장(블랙)</h4>                            
+                        </div>
+                    </div>
                 </div>                
             </div>
 
             <!-- <div class="row">
                 <p id="time">TIME STAMP</p>>
-            </div> -->
-            
+            </div> -->            
         </section>
-        
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <script src="js/scripts.js"></script>        
     </body>
 </html>
