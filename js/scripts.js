@@ -2,8 +2,8 @@ let currentColor = '';
 let view = 0; // 0:외장, 1: 내장
 let sec = 0.00;
 let min = 0;
-// let videoWidth;
-// let videoHeight;
+let videoWidth;
+let videoHeight;
 
 const video = document.getElementById('confiqurator');
 
@@ -13,8 +13,8 @@ window.onload = function() {
     document.getElementById('blue').style.pointerEvents = 'none';
     document.getElementById('confiqurator').play();
 
-    let videoWidth = document.getElementById("confiqurator").clientWidth;
-    let videoHeight = document.getElementById("confiqurator").clientHeight;
+    videoWidth = document.getElementById("confiqurator").clientWidth;
+    videoHeight = document.getElementById("confiqurator").clientHeight;    
     document.getElementById("panorama").style.width = videoWidth + 'px';
     document.getElementById("panorama").style.height = videoHeight + 'px';
 
@@ -32,10 +32,6 @@ function toggleVideoStatus(e) {
 }
 
 video.addEventListener("click", toggleVideoStatus);
-// video.addEventListener("click", () => {
-//     video.currentTime = 72.08;
-//     video.pause();
-// });
 
 video.addEventListener("timeupdate", (e) => {
     sec = (e.target.currentTime % 60).toFixed(2);
@@ -214,6 +210,80 @@ function load360() {
     });
 }
 
+// Rotate slider
+let slider = document.getElementById("myRange");
+slider.oninput = function() {
+    video.pause();
+
+    let addTimer = 0;
+    if (currentColor == "blue") {
+        addTimer = 0;
+    } else if(currentColor == "white") {
+        addTimer = 24;
+    } else if(currentColor == "orange") {
+        addTimer = 48;
+    } else if(currentColor == "grey") {
+        addTimer = 72;
+    }
+
+    let rotateValue = parseFloat(this.value)/4; //0.25초 간격
+    console.log("Rotate position : " + rotateValue);
+
+    video.currentTime = rotateValue + addTimer;
+}
+
+slider.onchange = function() {
+    setTimeout( () => {
+        video.play();
+        slider.value = 1;        
+    }, 3000);
+}
+
+// Mouse Drag Event
+let mouseX;
+let timeCheck;
+
+confiqurator.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;    
+});
+
+confiqurator.addEventListener('mousedown', (e) => {
+    let current = video.currentTime;
+    let videoElement = video.getBoundingClientRect();    
+    video.pause();
+    let pivotTime;
+
+    if (currentColor == "blue") {
+        pivotTime = 24.0;
+    } else if (currentColor == "white") {
+        pivotTime = 48.0;
+    } else if (currentColor == "orange") {
+        pivotTime = 72.0;
+    } else if (currentColor == "grey") {
+        pivotTime = 96.0;        
+    }
+
+    timeCheck = setInterval( () => {
+        let videoDrag;
+        if (mouseX > e.clientX) {
+            videoDrag = ((mouseX-e.clientX)/((videoElement.x+videoWidth)-e.clientX)).toFixed(2);
+            let moveTime = (pivotTime-current)*videoDrag;
+            video.currentTime = current + moveTime;            
+        } else {
+            videoDrag = ((e.clientX-mouseX)/(e.clientX-videoElement.x)).toFixed(2);            
+            let moveTime = current-((current-pivotTime+23.5)*videoDrag);
+            video.currentTime = moveTime;            
+        }
+        // console.log(videoDrag);
+    },50);
+});
+
+confiqurator.addEventListener('mouseup', (e) => {
+    clearInterval(timeCheck);    
+});
+
+
+
 
 /* 시간 정리
 00:00:00 ~ 00:24:30 파란색 (24초30) 인테스 블루 펄( https://casper.hyundai.com/wcontents/repn-car/side-45/AX01/exterior/YP5/colorchip-exterior.png ) 
@@ -229,5 +299,8 @@ function load360() {
 
 문제점 : timeStamp가 0.26~0.27초에 한번씩 찍음   
 */
+
+// to-do
+// height 값 달라지는 확인 필요
 
 
