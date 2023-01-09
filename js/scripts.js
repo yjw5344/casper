@@ -211,33 +211,33 @@ function load360() {
 }
 
 // Rotate slider
-let slider = document.getElementById("myRange");
-slider.oninput = function() {
-    video.pause();
+// let slider = document.getElementById("myRange");
+// slider.oninput = function() {
+//     video.pause();
 
-    let addTimer = 0;
-    if (currentColor == "blue") {
-        addTimer = 0;
-    } else if (currentColor == "white") {
-        addTimer = 24;
-    } else if (currentColor == "orange") {
-        addTimer = 48;
-    } else if (currentColor == "grey") {
-        addTimer = 72;
-    }
+//     let addTimer = 0;
+//     if (currentColor == "blue") {
+//         addTimer = 0;
+//     } else if (currentColor == "white") {
+//         addTimer = 24;
+//     } else if (currentColor == "orange") {
+//         addTimer = 48;
+//     } else if (currentColor == "grey") {
+//         addTimer = 72;
+//     }
 
-    let rotateValue = parseFloat(this.value)/4; //0.25초 간격
-    console.log("Rotate position : " + rotateValue);
+//     let rotateValue = parseFloat(this.value)/4; //0.25초 간격
+//     console.log("Rotate position : " + rotateValue);
 
-    video.currentTime = rotateValue + addTimer;
-}
+//     video.currentTime = rotateValue + addTimer;
+// }
 
-slider.onchange = function() {
-    setTimeout( () => {
-        video.play();
-        slider.value = 1;        
-    }, 3000);
-}
+// slider.onchange = function() {
+//     setTimeout( () => {
+//         video.play();
+//         slider.value = 1;        
+//     }, 3000);
+// }
 
 // Mouse Drag Event
 let mouseX;
