@@ -22,16 +22,16 @@ window.onload = function() {
     load360();
 }
 
-// 마우스 클릭 이벤트
-function toggleVideoStatus(e) {    
-    if (video.paused) {        
-        video.play();   // play() 영상 재생하는 메서드
-    } else {
-        video.pause();  // pause() 영상 중지하는 메서드        
-    }
-}
+// // 마우스 클릭 이벤트
+// function toggleVideoStatus(e) {    
+//     if (video.paused) {        
+//         video.play();   // play() 영상 재생하는 메서드
+//     } else {
+//         video.pause();  // pause() 영상 중지하는 메서드        
+//     }
+// }
 
-video.addEventListener("click", toggleVideoStatus);
+// video.addEventListener("click", toggleVideoStatus);
 
 video.addEventListener("timeupdate", (e) => {
     sec = (e.target.currentTime % 60).toFixed(2);
@@ -243,15 +243,63 @@ slider.onchange = function() {
 let mouseX;
 let timeCheck;
 
+let prevX = 0;
+let xDir = "";
 confiqurator.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;    
+    mouseX = e.clientX;
+
+    if (prevX < e.pageX) {
+        xDir = "right";
+    } else if (prevX > e.pageX) {
+        xDir = "left";
+    } else {
+        xDir = "";
+    }
+    prevX = e.pageX;
+    // console.log(e.pageX);
+    // console.log(xDir);
 });
 
+
+
+// 남은 비율 계산 버전
+// confiqurator.addEventListener('mousedown', (e) => {
+//     let current = video.currentTime;
+//     let videoElement = video.getBoundingClientRect();    
+//     video.pause();
+//     let pivotTime;
+
+//     if (currentColor == "blue") {
+//         pivotTime = 24.0;
+//     } else if (currentColor == "white") {
+//         pivotTime = 48.0;
+//     } else if (currentColor == "orange") {
+//         pivotTime = 72.0;
+//     } else if (currentColor == "grey") {
+//         pivotTime = 96.0;        
+//     }
+
+//     timeCheck = setInterval( () => {
+//         let videoDrag;
+//         if (mouseX > e.clientX) { // 오른쪽 이동
+//             videoDrag = ((mouseX-e.clientX)/((videoElement.x+videoWidth)-e.clientX)).toFixed(2);
+//             let moveTime = (pivotTime-current)*videoDrag;
+//             video.currentTime = current + moveTime;            
+//         } else { // 왼쪽 이동
+//             videoDrag = ((e.clientX-mouseX)/(e.clientX-videoElement.x)).toFixed(2);            
+//             let moveTime = current-((current-pivotTime+23.5)*videoDrag);
+//             video.currentTime = moveTime;            
+//         }
+//         // console.log(videoDrag);
+//     },50);
+// });
+
+// 일정한 속도로 빨리감기 & 리와인드 되는 버전
 confiqurator.addEventListener('mousedown', (e) => {
-    let current = video.currentTime;
-    let videoElement = video.getBoundingClientRect();    
+    let moveTime = video.currentTime;
+    let pivotTime;    
+    
     video.pause();
-    let pivotTime;
 
     if (currentColor == "blue") {
         pivotTime = 24.0;
@@ -262,24 +310,35 @@ confiqurator.addEventListener('mousedown', (e) => {
     } else if (currentColor == "grey") {
         pivotTime = 96.0;        
     }
-
+    
     timeCheck = setInterval( () => {
-        let videoDrag;
-        if (mouseX > e.clientX) { // 오른쪽 이동
-            videoDrag = ((mouseX-e.clientX)/((videoElement.x+videoWidth)-e.clientX)).toFixed(2);
-            let moveTime = (pivotTime-current)*videoDrag;
-            video.currentTime = current + moveTime;            
-        } else { // 왼쪽 이동
-            videoDrag = ((e.clientX-mouseX)/(e.clientX-videoElement.x)).toFixed(2);            
-            let moveTime = current-((current-pivotTime+23.5)*videoDrag);
-            video.currentTime = moveTime;            
+        if (xDir=="right") { // 오른쪽 이동
+            moveTime = (moveTime + 0.5);
+            // console.log(moveTime);
+            if(moveTime > pivotTime) {
+                moveTime -= 24.0;        
+            }
+            video.currentTime = moveTime;
+            xDir = "";
+        } else if (xDir=="left") { // 왼쪽 이동
+            moveTime = moveTime - 0.5;
+            if(moveTime < pivotTime-24.0) {
+                moveTime =+ pivotTime;
+            }
+            video.currentTime = moveTime;
+            xDir = "";
         }
-        // console.log(videoDrag);
     },50);
 });
 
 confiqurator.addEventListener('mouseup', (e) => {
-    clearInterval(timeCheck);    
+    clearInterval(timeCheck);
+    video.play();
+});
+
+confiqurator.addEventListener('mouseleave', (e) => {
+    clearInterval(timeCheck);
+    video.play();
 });
 
 /* 시간 정리
