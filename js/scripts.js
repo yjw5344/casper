@@ -14,7 +14,7 @@ window.onload = function() {
     document.getElementById('confiqurator').play();
 
     videoWidth = document.getElementById("confiqurator").clientWidth;
-    videoHeight = document.getElementById("confiqurator").clientHeight;    
+    videoHeight = document.getElementById("confiqurator").clientHeight;
     document.getElementById("panorama").style.width = videoWidth + 'px';
     document.getElementById("panorama").style.height = videoHeight + 'px';
 
@@ -89,7 +89,7 @@ document.getElementById("blue").addEventListener('click',() => {
     
     video.currentTime = (min*60) + parseFloat(sec) + addtimer;
 
-    if( view == 1) {
+    if(view == 1) {
         document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
         document.getElementById('interior').style.pointerEvents = 'auto';
         document.getElementById("confiqurator").style.display = "flex";
@@ -109,9 +109,9 @@ document.getElementById("white").addEventListener('click',(e) => {
     let addtimer = 0;
     if (currentColor == 'blue') {
         addtimer = 24.02;
-    } else if( currentColor == 'orange') {
+    } else if(currentColor == 'orange') {
         addtimer = -24;
-    } else if( currentColor == 'grey') {
+    } else if(currentColor == 'grey') {
         addtimer = -48.90;
     }
     
@@ -137,9 +137,9 @@ document.getElementById("orange").addEventListener('click',() => {
     let addtimer = 0;
     if (currentColor == 'blue') {
         addtimer = 48.05;
-    } else if( currentColor == 'white') {
+    } else if(currentColor == 'white') {
         addtimer = 24.1;
-    } else if( currentColor == 'grey') {
+    } else if(currentColor == 'grey') {
         addtimer = -24;
     }
     
@@ -166,9 +166,9 @@ document.getElementById("grey").addEventListener('click',() => {
     if (currentColor == 'blue') {
         // addtimer = 72.07;
         addtimer = 71.05;
-    } else if( currentColor == 'white') {
+    } else if(currentColor == 'white') {
         addtimer = 47.8;
-    } else if( currentColor == 'orange') {
+    } else if(currentColor == 'orange') {
         addtimer = 24;
     }
 
@@ -218,11 +218,11 @@ slider.oninput = function() {
     let addTimer = 0;
     if (currentColor == "blue") {
         addTimer = 0;
-    } else if(currentColor == "white") {
+    } else if (currentColor == "white") {
         addTimer = 24;
-    } else if(currentColor == "orange") {
+    } else if (currentColor == "orange") {
         addTimer = 48;
-    } else if(currentColor == "grey") {
+    } else if (currentColor == "grey") {
         addTimer = 72;
     }
 
@@ -265,11 +265,11 @@ confiqurator.addEventListener('mousedown', (e) => {
 
     timeCheck = setInterval( () => {
         let videoDrag;
-        if (mouseX > e.clientX) {
+        if (mouseX > e.clientX) { // 오른쪽 이동
             videoDrag = ((mouseX-e.clientX)/((videoElement.x+videoWidth)-e.clientX)).toFixed(2);
             let moveTime = (pivotTime-current)*videoDrag;
             video.currentTime = current + moveTime;            
-        } else {
+        } else { // 왼쪽 이동
             videoDrag = ((e.clientX-mouseX)/(e.clientX-videoElement.x)).toFixed(2);            
             let moveTime = current-((current-pivotTime+23.5)*videoDrag);
             video.currentTime = moveTime;            
@@ -281,9 +281,6 @@ confiqurator.addEventListener('mousedown', (e) => {
 confiqurator.addEventListener('mouseup', (e) => {
     clearInterval(timeCheck);    
 });
-
-
-
 
 /* 시간 정리
 00:00:00 ~ 00:24:30 파란색 (24초30) 인테스 블루 펄( https://casper.hyundai.com/wcontents/repn-car/side-45/AX01/exterior/YP5/colorchip-exterior.png ) 
@@ -297,10 +294,10 @@ confiqurator.addEventListener('mouseup', (e) => {
 오렌지 > 48:05 1:12:07 >> 24:02
 그레이 > 1:12:08 1:36:00 >> 23:02
 
-문제점 : timeStamp가 0.26~0.27초에 한번씩 찍음   
+문제점 : timeStamp가 0.26~0.27초에 한번씩 찍음
 */
 
 // to-do
-// height 값 달라지는 확인 필요
+// 내장&외장 height 값이 왜 달라지는 확인 필요
 
 
