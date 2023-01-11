@@ -4,7 +4,7 @@ const cors = require('cors');
 const app = express();
 const PORT = 80;
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/source"));
 app.use(cors({
     orgin: '*',
 }));
