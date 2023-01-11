@@ -271,7 +271,7 @@ confiqurator.addEventListener('touchstart', (e) => {
     }
     
     timeCheck = setInterval( () => {
-        if (m_xDir=="right") { // 오른쪽 이동
+        if (m_xDir=="left") { // 오른쪽 이동
             moveTime = (moveTime + 0.5);
             // console.log(moveTime);
             if(moveTime > pivotTime) {
@@ -279,7 +279,7 @@ confiqurator.addEventListener('touchstart', (e) => {
             }
             video.currentTime = moveTime;
             m_xDir = "";
-        } else if (m_xDir=="left") { // 왼쪽 이동
+        } else if (m_xDir=="right") { // 왼쪽 이동
             moveTime = moveTime - 0.5;
             if(moveTime < pivotTime-24.0) {
                 moveTime =+ pivotTime;
@@ -366,7 +366,7 @@ confiqurator.addEventListener('mousedown', (e) => {
     }
     
     timeCheck = setInterval( () => {
-        if (xDir=="right") { // 오른쪽 이동
+        if (xDir=="left") { // 오른쪽 이동
             moveTime = (moveTime + 0.5);
             // console.log(moveTime);
             if(moveTime > pivotTime) {
@@ -374,7 +374,7 @@ confiqurator.addEventListener('mousedown', (e) => {
             }
             video.currentTime = moveTime;
             xDir = "";
-        } else if (xDir=="left") { // 왼쪽 이동
+        } else if (xDir=="right") { // 왼쪽 이동
             moveTime = moveTime - 0.5;
             if(moveTime < pivotTime-24.0) {
                 moveTime =+ pivotTime;
