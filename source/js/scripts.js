@@ -239,6 +239,62 @@ function load360() {
 //     }, 3000);
 // }
 
+
+// Mobile Touch
+let m_prevX = 0;
+let m_xDir = "";
+confiqurator.addEventListener('touchmove', (e) => {
+    if (m_prevX < e.changedTouches[0].pageX) {
+        m_xDir = "right";
+    } else if (m_prevX > e.changedTouches[0].pageX) {
+        m_xDir = "left";
+    } else {
+        m_xDir = "";
+    }
+    m_prevX = e.changedTouches[0].pageX;
+});
+
+confiqurator.addEventListener('touchstart', (e) => {
+    let moveTime = video.currentTime;
+    let pivotTime;    
+    
+    video.pause();
+
+    if (currentColor == "blue") {
+        pivotTime = 24.0;
+    } else if (currentColor == "white") {
+        pivotTime = 48.0;
+    } else if (currentColor == "orange") {
+        pivotTime = 72.0;
+    } else if (currentColor == "grey") {
+        pivotTime = 96.0;        
+    }
+    
+    timeCheck = setInterval( () => {
+        if (m_xDir=="right") { // 오른쪽 이동
+            moveTime = (moveTime + 0.5);
+            // console.log(moveTime);
+            if(moveTime > pivotTime) {
+                moveTime -= 24.0;        
+            }
+            video.currentTime = moveTime;
+            m_xDir = "";
+        } else if (m_xDir=="left") { // 왼쪽 이동
+            moveTime = moveTime - 0.5;
+            if(moveTime < pivotTime-24.0) {
+                moveTime =+ pivotTime;
+            }
+            video.currentTime = moveTime;
+            m_xDir = "";
+        }
+    },50);
+});
+
+confiqurator.addEventListener('touchend', (e) => {
+    clearInterval(timeCheck);
+    video.play();
+});
+
 // Mouse Drag Event
 let mouseX;
 let timeCheck;
@@ -259,8 +315,6 @@ confiqurator.addEventListener('mousemove', (e) => {
     // console.log(e.pageX);
     // console.log(xDir);
 });
-
-
 
 // 남은 비율 계산 버전
 // confiqurator.addEventListener('mousedown', (e) => {
@@ -340,6 +394,11 @@ confiqurator.addEventListener('mouseleave', (e) => {
     clearInterval(timeCheck);
     video.play();
 });
+
+// 저전력모드인 경우
+// video.addEventListener('suspend', () => {
+//     alert("저전력 모드를 해제하세요!");
+// });
 
 /* 시간 정리
 00:00:00 ~ 00:24:30 파란색 (24초30) 인테스 블루 펄( https://casper.hyundai.com/wcontents/repn-car/side-45/AX01/exterior/YP5/colorchip-exterior.png ) 
