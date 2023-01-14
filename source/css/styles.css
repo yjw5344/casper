@@ -657,7 +657,12 @@ progress {
     .col-lg-4 {
       flex: 0 0 auto;
       width: 20%;
-    } 
+    }
+
+    .col-lg-44 {
+      flex: 0 0 auto;
+      width: 25%;
+    }
 
 }
 
@@ -1145,6 +1150,13 @@ progress {
     width: 20%;
   } 
 
+  .col-lg-44 {
+    flex: 0 0 auto;
+    width: 25%;
+  }
+
+  /* ------------------- */
+
   .col-md {
     flex: 1 0 0%;
   }
@@ -1370,6 +1382,12 @@ progress {
     margin-bottom: 0;
     font-size : 25px;
   }
+  .col-lg-44 {
+    flex: 0 0 auto;
+    width: 25%;
+  }
+
+  /* ----------- */
 
   .col-lg {
     flex: 1 0 0%;

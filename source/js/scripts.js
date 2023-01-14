@@ -1,4 +1,8 @@
+const SCREEN_0 = './video/AX-0000.mp4';
+const SCREEN_1 = './video/AX-0001.mp4';
+
 let currentColor = '';
+let currentScreen = 0; // 0: 바다 1: 도시(기존)
 let view = 0; // 0:외장, 1: 내장
 let sec = 0.00;
 let min = 0;
@@ -11,10 +15,11 @@ window.onload = function() {
     currentColor = 'blue';
     document.getElementById('blue').style.backgroundColor = '#b22222';
     document.getElementById('blue').style.pointerEvents = 'none';
-    document.getElementById('confiqurator').play();
+    // document.getElementById('confiqurator').play();
+    document.getElementById('confiqurator').pause();
 
-    videoWidth = document.getElementById("confiqurator").clientWidth;
-    videoHeight = document.getElementById("confiqurator").clientHeight;
+    videoWidth = document.getElementById("confiqurator").offsetWidth;
+    videoHeight = document.getElementById("confiqurator").offsetHeight;
     document.getElementById("panorama").style.width = videoWidth + 'px';
     document.getElementById("panorama").style.height = videoHeight + 'px';
 
@@ -30,7 +35,6 @@ window.onload = function() {
 //         video.pause();  // pause() 영상 중지하는 메서드        
 //     }
 // }
-
 // video.addEventListener("click", toggleVideoStatus);
 
 video.addEventListener("timeupdate", (e) => {
@@ -38,29 +42,52 @@ video.addEventListener("timeupdate", (e) => {
     min = Math.floor(e.target.currentTime / 60);
     // console.log(min + ":" + sec); // time log
 
-    if (currentColor == 'blue') {
-        if (sec >= 23.70) {        
-            console.log(sec);
-            video.currentTime = 0;            
+    if (currentScreen == 0) {
+        if (currentColor == 'blue') {
+            if (sec >= 23.70) {        
+                console.log(sec);
+                video.currentTime = 0;            
+            }
+        } else if (currentColor =='white') {
+            if (sec >= 47.80) {        
+                console.log(sec);
+                video.currentTime = 24.10;            
+            }
+        } else if (currentColor =='orange') {
+            if (sec >= 11.70 && min >= 1) {        
+                console.log(sec);
+                video.currentTime = 48.10;            
+            }
+            
+        } else if (currentColor =='grey') {
+            if (sec >= 35.70 && min >= 1) {        
+                console.log(sec);
+                video.currentTime = 72.10;            
+            }        
         }
-    } else if (currentColor =='white') {
-        if (sec >= 47.80) {        
-            console.log(sec);
-            video.currentTime = 24.10;            
+    } else if (currentScreen == 1) {
+        if (currentColor == 'default_blue') {
+            if (sec >= 23.80) {        
+                console.log(sec);
+                video.currentTime = 0;            
+            }
+        } else if (currentColor == 'default_white') {
+            if (sec >= 47.70) {        
+                console.log(sec);
+                video.currentTime = 24.10;            
+            }
+        } else if (currentColor == 'default_orange') {
+            if (sec >= 11.80 && min >= 1) {        
+                console.log(sec);
+                video.currentTime = 48.10;            
+            }            
+        } else if (currentColor == 'default_grey') {
+            if (sec >= 35.70 && min >= 1) {        
+                console.log(sec);
+                video.currentTime = 72.15;            
+            }        
         }
-    } else if (currentColor =='orange') {
-        if (sec >= 11.70 && min >= 1) {        
-            console.log(sec);
-            video.currentTime = 48.10;            
-        }
-        
-    } else if (currentColor =='grey') {
-        if (sec >= 35.70 && min >= 1) {        
-            console.log(sec);
-            video.currentTime = 72.10;            
-        }        
     }
-    // document.getElementById('time').innerHTML = e.target.currentTime;
 });
 
 // 마우스 오버 이벤트
@@ -74,20 +101,28 @@ video.addEventListener("timeupdate", (e) => {
 
 // 색상 변경 이벤트
 document.getElementById("blue").addEventListener('click',() => {
+    if (currentScreen == 0) {        
+        let addtimer = 0;
+        if (currentColor == 'white') {
+            addtimer = -24.01;
+        } else if( currentColor == 'orange') {
+            addtimer = -48.05;
+        } else if( currentColor == 'grey') {
+            addtimer = -71.9;
+        }    
+        video.currentTime = (min*60) + parseFloat(sec) + addtimer;
+    } else if (currentScreen == 1) {
+        currentScreen = 0;
+        video.src = SCREEN_0;
+        video.load();
+        // video.play();
+        video.currentTime = 0.00;
+        video.pause();
+    }
+
     document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
     document.getElementById(currentColor).style.pointerEvents = 'auto';
     document.getElementById('blue').style.backgroundColor = '#b22222';
-
-    let addtimer = 0;
-    if (currentColor == 'white') {
-        addtimer = -24.01;
-    } else if( currentColor == 'orange') {
-        addtimer = -48.05;
-    } else if( currentColor == 'grey') {
-        addtimer = -71.9;
-    }
-    
-    video.currentTime = (min*60) + parseFloat(sec) + addtimer;
 
     if(view == 1) {
         document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
@@ -96,55 +131,69 @@ document.getElementById("blue").addEventListener('click',() => {
         document.getElementById("panorama").style.display = "none";
         view = 0;
     }
-
     currentColor = 'blue';
 });
 
-document.getElementById("white").addEventListener('click',(e) => {    
+document.getElementById("white").addEventListener('click',(e) => {
+    if (currentScreen == 0) {
+        let addtimer = 0;
+        if (currentColor == 'blue') {
+            addtimer = 24.02;
+        } else if(currentColor == 'orange') {
+            addtimer = -24;
+        } else if(currentColor == 'grey') {
+            addtimer = -48.90;
+        }
+        video.currentTime = (min*60) + parseFloat(sec) + addtimer;
+    } else if (currentScreen == 1) {
+        currentScreen = 0;
+        video.src = SCREEN_0;
+        video.load();
+        // video.play();
+        video.currentTime = 24.05;
+        video.pause();
+    }
+
     document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
     document.getElementById(currentColor).style.pointerEvents = 'auto';
     document.getElementById('white').style.backgroundColor = '#b22222';
     document.getElementById('white').style.pointerEvents = 'none';
 
-    let addtimer = 0;
-    if (currentColor == 'blue') {
-        addtimer = 24.02;
-    } else if(currentColor == 'orange') {
-        addtimer = -24;
-    } else if(currentColor == 'grey') {
-        addtimer = -48.90;
-    }
-    
-    video.currentTime = (min*60) + parseFloat(sec) + addtimer;
-
     if( view == 1) {
         document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
         document.getElementById('interior').style.pointerEvents = 'auto';
         document.getElementById("confiqurator").style.display = "flex";
         document.getElementById("panorama").style.display = "none";
         view = 0;
-    }
-    
+    }    
     currentColor = 'white';
 });
 
 document.getElementById("orange").addEventListener('click',() => {
+    if (currentScreen == 0) {
+        let addtimer = 0;
+        if (currentColor == 'blue') {
+            addtimer = 48.05;
+        } else if(currentColor == 'white') {
+            addtimer = 24.1;
+        } else if(currentColor == 'grey') {
+            addtimer = -24;
+        }    
+        video.currentTime = (min*60) + parseFloat(sec) + addtimer;
+    } else if (currentScreen == 1) {
+        currentScreen = 0;
+        video.src = SCREEN_0;
+        video.load();
+        // video.play();
+        video.currentTime = 48.05;
+        video.pause();
+    }
+
     document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
     document.getElementById(currentColor).style.pointerEvents = 'auto';
     document.getElementById('orange').style.backgroundColor = '#b22222';
     document.getElementById('orange').style.pointerEvents = 'none';
 
-    let addtimer = 0;
-    if (currentColor == 'blue') {
-        addtimer = 48.05;
-    } else if(currentColor == 'white') {
-        addtimer = 24.1;
-    } else if(currentColor == 'grey') {
-        addtimer = -24;
-    }
-    
-    video.currentTime = (min*60) + parseFloat(sec) + addtimer;
-
     if( view == 1) {
         document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
         document.getElementById('interior').style.pointerEvents = 'auto';
@@ -152,28 +201,35 @@ document.getElementById("orange").addEventListener('click',() => {
         document.getElementById("panorama").style.display = "none";
         view = 0;
     }
-
     currentColor = 'orange';
 });
 
 document.getElementById("grey").addEventListener('click',() => {
+    if (currentScreen == 0) {
+        let addtimer = 0;
+        if (currentColor == 'blue') {
+            // addtimer = 72.07;
+            addtimer = 71.05;
+        } else if(currentColor == 'white') {
+            addtimer = 47.8;
+        } else if(currentColor == 'orange') {
+            addtimer = 24;
+        }
+        video.currentTime = (min*60) + parseFloat(sec) + addtimer;
+    } else if (currentScreen == 1) {
+        currentScreen = 0;
+        video.src = SCREEN_0;
+        video.load();
+        // video.play();
+        video.currentTime = 72.10;
+        video.pause();
+    }
+
     document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
     document.getElementById(currentColor).style.pointerEvents = 'auto';
     document.getElementById('grey').style.backgroundColor = '#b22222';
     document.getElementById('grey').style.pointerEvents = 'none';    
 
-    let addtimer = 0;
-    if (currentColor == 'blue') {
-        // addtimer = 72.07;
-        addtimer = 71.05;
-    } else if(currentColor == 'white') {
-        addtimer = 47.8;
-    } else if(currentColor == 'orange') {
-        addtimer = 24;
-    }
-
-    video.currentTime = (min*60) + parseFloat(sec) + addtimer;
-
     if( view == 1) {
         document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
         document.getElementById('interior').style.pointerEvents = 'auto';
@@ -181,9 +237,7 @@ document.getElementById("grey").addEventListener('click',() => {
         document.getElementById("panorama").style.display = "none";
         view = 0;
     }
-
     currentColor = 'grey';
-
 });
 
 document.getElementById("interior").addEventListener('click',(e) => {
@@ -239,8 +293,7 @@ function load360() {
 //     }, 3000);
 // }
 
-
-// Mobile Touch
+// Mobile : Touch Drag Event
 let m_prevX = 0;
 let m_xDir = "";
 confiqurator.addEventListener('touchmove', (e) => {
@@ -260,19 +313,19 @@ confiqurator.addEventListener('touchstart', (e) => {
     
     video.pause();
 
-    if (currentColor == "blue") {
+    if (currentColor == "blue" || currentColor == "default_blue") {
         pivotTime = 24.0;
-    } else if (currentColor == "white") {
+    } else if (currentColor == "white" || currentColor == "default_white") {
         pivotTime = 48.0;
-    } else if (currentColor == "orange") {
+    } else if (currentColor == "orange" || currentColor == "default_orange") {
         pivotTime = 72.0;
-    } else if (currentColor == "grey") {
+    } else if (currentColor == "grey" || currentColor == "default_grey") {
         pivotTime = 96.0;        
     }
     
     timeCheck = setInterval( () => {
         if (m_xDir=="left") { // 오른쪽 이동
-            moveTime = (moveTime + 0.5);
+            moveTime = (moveTime + 0.4);
             // console.log(moveTime);
             if(moveTime > pivotTime) {
                 moveTime -= 24.0;        
@@ -280,7 +333,7 @@ confiqurator.addEventListener('touchstart', (e) => {
             video.currentTime = moveTime;
             m_xDir = "";
         } else if (m_xDir=="right") { // 왼쪽 이동
-            moveTime = moveTime - 0.5;
+            moveTime = moveTime - 0.4;
             if(moveTime < pivotTime-24.0) {
                 moveTime =+ pivotTime;
             }
@@ -292,18 +345,14 @@ confiqurator.addEventListener('touchstart', (e) => {
 
 confiqurator.addEventListener('touchend', (e) => {
     clearInterval(timeCheck);
-    video.play();
+    // video.play();
 });
 
-// Mouse Drag Event
-let mouseX;
+// PC : Mouse Drag Event
 let timeCheck;
-
 let prevX = 0;
 let xDir = "";
 confiqurator.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-
     if (prevX < e.pageX) {
         xDir = "right";
     } else if (prevX > e.pageX) {
@@ -311,57 +360,23 @@ confiqurator.addEventListener('mousemove', (e) => {
     } else {
         xDir = "";
     }
-    prevX = e.pageX;
-    // console.log(e.pageX);
-    // console.log(xDir);
+    prevX = e.pageX;    
 });
-
-// 남은 비율 계산 버전
-// confiqurator.addEventListener('mousedown', (e) => {
-//     let current = video.currentTime;
-//     let videoElement = video.getBoundingClientRect();    
-//     video.pause();
-//     let pivotTime;
-
-//     if (currentColor == "blue") {
-//         pivotTime = 24.0;
-//     } else if (currentColor == "white") {
-//         pivotTime = 48.0;
-//     } else if (currentColor == "orange") {
-//         pivotTime = 72.0;
-//     } else if (currentColor == "grey") {
-//         pivotTime = 96.0;        
-//     }
-
-//     timeCheck = setInterval( () => {
-//         let videoDrag;
-//         if (mouseX > e.clientX) { // 오른쪽 이동
-//             videoDrag = ((mouseX-e.clientX)/((videoElement.x+videoWidth)-e.clientX)).toFixed(2);
-//             let moveTime = (pivotTime-current)*videoDrag;
-//             video.currentTime = current + moveTime;            
-//         } else { // 왼쪽 이동
-//             videoDrag = ((e.clientX-mouseX)/(e.clientX-videoElement.x)).toFixed(2);            
-//             let moveTime = current-((current-pivotTime+23.5)*videoDrag);
-//             video.currentTime = moveTime;            
-//         }
-//         // console.log(videoDrag);
-//     },50);
-// });
 
 // 일정한 속도로 빨리감기 & 리와인드 되는 버전
 confiqurator.addEventListener('mousedown', (e) => {
     let moveTime = video.currentTime;
-    let pivotTime;    
+    let pivotTime;   
     
-    video.pause();
+    // video.pause();
 
-    if (currentColor == "blue") {
+    if (currentColor == "blue" || currentColor == "default_blue") {
         pivotTime = 24.0;
-    } else if (currentColor == "white") {
+    } else if (currentColor == "white" || currentColor == "default_white") {
         pivotTime = 48.0;
-    } else if (currentColor == "orange") {
+    } else if (currentColor == "orange" || currentColor == "default_orange") {
         pivotTime = 72.0;
-    } else if (currentColor == "grey") {
+    } else if (currentColor == "grey" || currentColor == "default_grey") {
         pivotTime = 96.0;        
     }
     
@@ -382,17 +397,156 @@ confiqurator.addEventListener('mousedown', (e) => {
             video.currentTime = moveTime;
             xDir = "";
         }
-    },50);
+        // console.log("currentTime : " + moveTime);
+    }, 50);
 });
 
 confiqurator.addEventListener('mouseup', (e) => {
     clearInterval(timeCheck);
-    video.play();
+    // video.play();
 });
 
 confiqurator.addEventListener('mouseleave', (e) => {
     clearInterval(timeCheck);
-    video.play();
+    // video.play();    
+});
+
+
+// 배경 추가(도시 배경)
+document.getElementById("default_blue").addEventListener('click',() => {
+    if (currentScreen == 0) {
+        currentScreen = 1;
+        video.src = SCREEN_1;
+        video.load();
+        // video.play();
+        video.currentTime = 0.00;
+        video.pause();
+    } else if (currentScreen == 1) {        
+        let addtimer = 0;
+        if (currentColor == 'default_white') {
+            addtimer = -24.0;
+        } else if( currentColor == 'default_orange') {
+            addtimer = -48.0;
+        } else if( currentColor == 'default_grey') {
+            addtimer = -71.90;
+        }
+        video.currentTime = (min*60) + parseFloat(sec) + addtimer;
+    }  
+
+    document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+    document.getElementById(currentColor).style.pointerEvents = 'auto';
+    document.getElementById('default_blue').style.backgroundColor = '#b22222';
+
+    if(view == 1) {
+        document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
+        document.getElementById('interior').style.pointerEvents = 'auto';
+        document.getElementById("confiqurator").style.display = "flex";
+        document.getElementById("panorama").style.display = "none";
+        view = 0;
+    }
+    currentColor = 'default_blue';
+});
+
+document.getElementById("default_white").addEventListener('click',() => {
+    if (currentScreen == 0) {
+        currentScreen = 1;
+        video.src = SCREEN_1;
+        video.load();
+        // video.play();
+        video.currentTime = 24.10;
+        video.pause();
+    } else if (currentScreen == 1) {        
+        let addtimer = 0;
+        if (currentColor == 'default_blue') {
+            addtimer = 24.15;
+        } else if( currentColor == 'default_orange') {
+            addtimer = -24.00;
+        } else if( currentColor == 'default_grey') {
+            addtimer = -48.00;
+        }
+        video.currentTime = (min*60) + parseFloat(sec) + addtimer;
+    }
+
+    document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+    document.getElementById(currentColor).style.pointerEvents = 'auto';
+    document.getElementById('default_white').style.backgroundColor = '#b22222';
+
+    if(view == 1) {
+        document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
+        document.getElementById('interior').style.pointerEvents = 'auto';
+        document.getElementById("confiqurator").style.display = "flex";
+        document.getElementById("panorama").style.display = "none";
+        view = 0;
+    }
+    currentColor = 'default_white';
+});
+
+document.getElementById("default_orange").addEventListener('click',() => {
+    if (currentScreen == 0) {
+        currentScreen = 1;
+        video.src = SCREEN_1;
+        video.load();
+        // video.play();
+        video.currentTime = 48.10;
+        video.pause();
+    } else if (currentScreen == 1) {        
+        let addtimer = 0;
+        if (currentColor == 'default_blue') {
+            addtimer = 48.05;
+        } else if( currentColor == 'default_white') {
+            addtimer = 24.1;
+        } else if( currentColor == 'default_grey') {
+            addtimer = -24.0;
+        }
+        video.currentTime = (min*60) + parseFloat(sec) + addtimer;
+    }
+
+    document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+    document.getElementById(currentColor).style.pointerEvents = 'auto';
+    document.getElementById('default_orange').style.backgroundColor = '#b22222';
+
+    if(view == 1) {
+        document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
+        document.getElementById('interior').style.pointerEvents = 'auto';
+        document.getElementById("confiqurator").style.display = "flex";
+        document.getElementById("panorama").style.display = "none";
+        view = 0;
+    }
+    currentColor = 'default_orange';
+});
+
+document.getElementById("default_grey").addEventListener('click',() => {    
+    if (currentScreen == 0) {
+        currentScreen = 1;
+        video.src = SCREEN_1;
+        video.load();
+        // video.play();
+        video.currentTime = 72.15;
+        video.pause();
+    } else if (currentScreen == 1) {        
+        let addtimer = 0;
+        if (currentColor == 'default_blue') {
+            addtimer = 72.10;
+        } else if( currentColor == 'default_white') {
+            addtimer = 48.00;
+        } else if( currentColor == 'default_orange') {
+            addtimer = 24.0;
+        }
+        video.currentTime = (min*60) + parseFloat(sec) + addtimer;
+    }
+
+    document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+    document.getElementById(currentColor).style.pointerEvents = 'auto';
+    document.getElementById('default_grey').style.backgroundColor = '#b22222';
+
+    if(view == 1) {
+        document.getElementById('interior').style.backgroundColor = 'rgba(0, 0, 0, 0.1)';;
+        document.getElementById('interior').style.pointerEvents = 'auto';
+        document.getElementById("confiqurator").style.display = "flex";
+        document.getElementById("panorama").style.display = "none";
+        view = 0;
+    }
+    currentColor = 'default_grey';
 });
 
 // 저전력모드인 경우
