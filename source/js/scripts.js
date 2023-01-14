@@ -549,6 +549,17 @@ document.getElementById("default_grey").addEventListener('click',() => {
     currentColor = 'default_grey';
 });
 
+// 재생 버튼
+document.getElementById("rotateBtn").addEventListener('click',(e) => {    
+    if (video.paused) {        
+        video.play();
+        document.getElementById("rotateMsg").innerHTML = "정지";
+    } else {
+        video.pause();
+        document.getElementById("rotateMsg").innerHTML = "재생";
+    }
+});
+
 // 저전력모드인 경우
 // video.addEventListener('suspend', () => {
 //     alert("저전력 모드를 해제하세요!");
