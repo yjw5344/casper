@@ -11,7 +11,22 @@ let videoHeight;
 
 const video = document.getElementById('confiqurator');
 
-window.onload = function() {
+// window.onload = function() {
+//     currentColor = 'blue';
+//     document.getElementById('blue').style.backgroundColor = '#b22222';
+//     document.getElementById('blue').style.pointerEvents = 'none';
+//     // document.getElementById('confiqurator').play();
+//     document.getElementById('confiqurator').pause();
+
+//     videoWidth = document.getElementById("confiqurator").offsetWidth;
+//     videoHeight = document.getElementById("confiqurator").offsetHeight;
+//     document.getElementById("panorama").style.width = videoWidth + 'px';
+//     document.getElementById("panorama").style.height = videoHeight + 'px';
+
+//     document.getElementById("panorama").style.display = "none";
+//     load360();
+// }
+document.addEventListener("DOMContentLoaded", (e) => {
     currentColor = 'blue';
     document.getElementById('blue').style.backgroundColor = '#b22222';
     document.getElementById('blue').style.pointerEvents = 'none';
@@ -25,7 +40,7 @@ window.onload = function() {
 
     document.getElementById("panorama").style.display = "none";
     load360();
-}
+});
 
 // // 마우스 클릭 이벤트
 // function toggleVideoStatus(e) {    
@@ -99,6 +114,16 @@ video.addEventListener("timeupdate", (e) => {
 //     video.play();
 // });
 
+let checkPlay = () => {    
+    if (video.paused) {        
+        document.getElementById("rotateBtn").src = "./img/play.png";
+        document.getElementById("rotateMsg").innerHTML = "재생";        
+    } else {
+        document.getElementById("rotateBtn").src = "./img/pause.png";
+        document.getElementById("rotateMsg").innerHTML = "정지";                
+    }
+}
+
 // 색상 변경 이벤트
 document.getElementById("blue").addEventListener('click',() => {
     if (currentScreen == 0) {        
@@ -118,6 +143,7 @@ document.getElementById("blue").addEventListener('click',() => {
         // video.play();
         video.currentTime = 0.00;
         video.pause();
+        checkPlay();
     }
 
     document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
@@ -152,6 +178,7 @@ document.getElementById("white").addEventListener('click',(e) => {
         // video.play();
         video.currentTime = 24.05;
         video.pause();
+        checkPlay();
     }
 
     document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
@@ -187,6 +214,7 @@ document.getElementById("orange").addEventListener('click',() => {
         // video.play();
         video.currentTime = 48.05;
         video.pause();
+        checkPlay();
     }
 
     document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
@@ -222,6 +250,7 @@ document.getElementById("grey").addEventListener('click',() => {
         // video.play();
         video.currentTime = 72.10;
         video.pause();
+        checkPlay();
     }
 
     document.getElementById(currentColor).style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
@@ -397,7 +426,7 @@ confiqurator.addEventListener('mousedown', (e) => {
             xDir = "";
         }
         // console.log("currentTime : " + moveTime);
-    }, 100);
+    }, 50);
 });
 
 confiqurator.addEventListener('mouseup', (e) => {
@@ -420,6 +449,7 @@ document.getElementById("default_blue").addEventListener('click',() => {
         // video.play();
         video.currentTime = 0.00;
         video.pause();
+        checkPlay();
     } else if (currentScreen == 1) {        
         let addtimer = 0;
         if (currentColor == 'default_white') {
@@ -454,6 +484,7 @@ document.getElementById("default_white").addEventListener('click',() => {
         // video.play();
         video.currentTime = 24.10;
         video.pause();
+        checkPlay();
     } else if (currentScreen == 1) {        
         let addtimer = 0;
         if (currentColor == 'default_blue') {
@@ -488,6 +519,7 @@ document.getElementById("default_orange").addEventListener('click',() => {
         // video.play();
         video.currentTime = 48.10;
         video.pause();
+        checkPlay();
     } else if (currentScreen == 1) {        
         let addtimer = 0;
         if (currentColor == 'default_blue') {
@@ -522,6 +554,7 @@ document.getElementById("default_grey").addEventListener('click',() => {
         // video.play();
         video.currentTime = 72.15;
         video.pause();
+        checkPlay();
     } else if (currentScreen == 1) {        
         let addtimer = 0;
         if (currentColor == 'default_blue') {
