@@ -16,9 +16,9 @@ const video = document.getElementById('confiqurator');
 // 모바일 체크
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 console.log("isMobile : " + isMobile);
-if(isMobile) {
-    video.src = SCREEN_2;
-}
+// if(isMobile) {
+//     video.src = SCREEN_2;
+// }
 
 // window.onload = function() {
 //     currentColor = 'blue';
@@ -40,6 +40,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
     document.getElementById('blue').style.backgroundColor = '#b22222';
     document.getElementById('blue').style.pointerEvents = 'none';
     // document.getElementById('confiqurator').play();
+    if(isMobile) {
+        document.getElementById('confiqurator').src = SCREEN_2;
+    }
+    
     document.getElementById('confiqurator').pause();
 
     videoWidth = document.getElementById("confiqurator").offsetWidth;
