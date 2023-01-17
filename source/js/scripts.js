@@ -40,10 +40,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
     document.getElementById('blue').style.backgroundColor = '#b22222';
     document.getElementById('blue').style.pointerEvents = 'none';
     // document.getElementById('confiqurator').play();
-    if(isMobile) {
-        document.getElementById('confiqurator').src = SCREEN_2;
-    }
-    
     document.getElementById('confiqurator').pause();
 
     videoWidth = document.getElementById("confiqurator").offsetWidth;
@@ -151,11 +147,7 @@ document.getElementById("blue").addEventListener('click',() => {
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        if(isMobile) {
-            video.src = SCREEN_2;
-        } else {
-            video.src = SCREEN_0;
-        }        
+        video.src = SCREEN_0;        
         video.load();
         // video.play();
         video.currentTime = 0.00;
@@ -190,11 +182,7 @@ document.getElementById("white").addEventListener('click',(e) => {
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        if(isMobile) {
-            video.src = SCREEN_2;
-        } else {
-            video.src = SCREEN_0;
-        }
+        video.src = SCREEN_0;
         video.load();
         // video.play();
         video.currentTime = 24.05;
@@ -230,11 +218,7 @@ document.getElementById("orange").addEventListener('click',() => {
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        if(isMobile) {
-            video.src = SCREEN_2;
-        } else {
-            video.src = SCREEN_0;
-        }
+        video.src = SCREEN_0;
         video.load();
         // video.play();
         video.currentTime = 48.05;
@@ -270,11 +254,7 @@ document.getElementById("grey").addEventListener('click',() => {
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        if(isMobile) {
-            video.src = SCREEN_2;
-        } else {
-            video.src = SCREEN_0;
-        }
+        video.src = SCREEN_0;
         video.load();
         // video.play();
         video.currentTime = 72.10;
@@ -473,11 +453,7 @@ confiqurator.addEventListener('mouseleave', (e) => {
 document.getElementById("default_blue").addEventListener('click',() => {
     if (currentScreen == 0) {
         currentScreen = 1;
-        if(isMobile) {
-            video.src = SCREEN_3;
-        } else {
-            video.src = SCREEN_1;
-        }
+        video.src = SCREEN_1;
         video.load();
         // video.play();
         video.currentTime = 0.00;
@@ -512,11 +488,7 @@ document.getElementById("default_blue").addEventListener('click',() => {
 document.getElementById("default_white").addEventListener('click',() => {
     if (currentScreen == 0) {
         currentScreen = 1;
-        if(isMobile) {
-            video.src = SCREEN_3;
-        } else {
-            video.src = SCREEN_1;
-        }
+        video.src = SCREEN_1;
         video.load();
         // video.play();
         video.currentTime = 24.10;
@@ -551,11 +523,7 @@ document.getElementById("default_white").addEventListener('click',() => {
 document.getElementById("default_orange").addEventListener('click',() => {
     if (currentScreen == 0) {
         currentScreen = 1;
-        if(isMobile) {
-            video.src = SCREEN_3;
-        } else {
-            video.src = SCREEN_1;
-        }
+        video.src = SCREEN_1;
         video.load();
         // video.play();
         video.currentTime = 48.10;
@@ -590,11 +558,7 @@ document.getElementById("default_orange").addEventListener('click',() => {
 document.getElementById("default_grey").addEventListener('click',() => {    
     if (currentScreen == 0) {
         currentScreen = 1;
-        if(isMobile) {
-            video.src = SCREEN_3;
-        } else {
-            video.src = SCREEN_1;
-        }
+        video.src = SCREEN_1;
         video.load();
         // video.play();
         video.currentTime = 72.15;
