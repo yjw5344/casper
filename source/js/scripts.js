@@ -1,5 +1,7 @@
-const SCREEN_0 = './video/AX-0000.mp4';
-const SCREEN_1 = './video/AX-0001.mp4';
+const SCREEN_0 = '/video/AX-0000.mp4';
+const SCREEN_1 = '/video/AX-0001.mp4';
+const SCREEN_2 = '/video/AX-0000.webm';
+const SCREEN_3 = '/video/AX-0001.webm';
 
 let currentColor = '';
 let currentScreen = 0; // 0: 바다 1: 도시(기존)
@@ -10,6 +12,13 @@ let videoWidth;
 let videoHeight;
 
 const video = document.getElementById('confiqurator');
+
+// 모바일 체크
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+console.log("isMobile : " + isMobile);
+if(isMobile) {
+    video.src = SCREEN_2;
+}
 
 // window.onload = function() {
 //     currentColor = 'blue';
@@ -116,10 +125,10 @@ video.addEventListener("timeupdate", (e) => {
 
 let checkPlay = () => {    
     if (video.paused) {        
-        document.getElementById("rotateBtn").src = "./img/play.png";
+        document.getElementById("rotateBtn").src = "/img/play.png";
         document.getElementById("rotateMsg").innerHTML = "재생";        
     } else {
-        document.getElementById("rotateBtn").src = "./img/pause.png";
+        document.getElementById("rotateBtn").src = "/img/pause.png";
         document.getElementById("rotateMsg").innerHTML = "정지";                
     }
 }
@@ -138,7 +147,11 @@ document.getElementById("blue").addEventListener('click',() => {
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        video.src = SCREEN_0;
+        if(isMobile) {
+            video.src = SCREEN_2;
+        } else {
+            video.src = SCREEN_0;
+        }        
         video.load();
         // video.play();
         video.currentTime = 0.00;
@@ -173,7 +186,11 @@ document.getElementById("white").addEventListener('click',(e) => {
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        video.src = SCREEN_0;
+        if(isMobile) {
+            video.src = SCREEN_2;
+        } else {
+            video.src = SCREEN_0;
+        }
         video.load();
         // video.play();
         video.currentTime = 24.05;
@@ -209,7 +226,11 @@ document.getElementById("orange").addEventListener('click',() => {
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        video.src = SCREEN_0;
+        if(isMobile) {
+            video.src = SCREEN_2;
+        } else {
+            video.src = SCREEN_0;
+        }
         video.load();
         // video.play();
         video.currentTime = 48.05;
@@ -245,7 +266,11 @@ document.getElementById("grey").addEventListener('click',() => {
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        video.src = SCREEN_0;
+        if(isMobile) {
+            video.src = SCREEN_2;
+        } else {
+            video.src = SCREEN_0;
+        }
         video.load();
         // video.play();
         video.currentTime = 72.10;
@@ -284,7 +309,7 @@ document.getElementById("interior").addEventListener('click',(e) => {
 //panorama
 function load360() {
     var img = new Image();    
-    img.src = "./img/360.jpg";
+    img.src = "/img/360.jpg";
 
     pannellum.viewer('panorama', {               
         "autoLoad": true,
@@ -353,7 +378,7 @@ confiqurator.addEventListener('touchstart', (e) => {
     
     timeCheck = setInterval( () => {
         if (m_xDir=="left") { // 오른쪽 이동
-            moveTime = (moveTime + 0.4);
+            moveTime = (moveTime + 0.2);
             // console.log(moveTime);
             if(moveTime > pivotTime) {
                 moveTime -= 24.0;        
@@ -361,14 +386,14 @@ confiqurator.addEventListener('touchstart', (e) => {
             video.currentTime = moveTime;
             m_xDir = "";
         } else if (m_xDir=="right") { // 왼쪽 이동
-            moveTime = moveTime - 0.4;
+            moveTime = moveTime - 0.2;
             if(moveTime < pivotTime-24.0) {
                 moveTime =+ pivotTime;
             }
             video.currentTime = moveTime;
             m_xDir = "";
         }
-    },50)
+    },100)
 });
 
 confiqurator.addEventListener('touchend', (e) => {
@@ -392,7 +417,7 @@ confiqurator.addEventListener('mousemove', (e) => {
 });
 
 // 일정한 속도로 빨리감기 & 리와인드 되는 버전
-confiqurator.addEventListener('mousedown', (e) => {
+confiqurator.addEventListener('mousedown', (e) => {    
     let moveTime = video.currentTime;
     let pivotTime;   
     
@@ -444,7 +469,11 @@ confiqurator.addEventListener('mouseleave', (e) => {
 document.getElementById("default_blue").addEventListener('click',() => {
     if (currentScreen == 0) {
         currentScreen = 1;
-        video.src = SCREEN_1;
+        if(isMobile) {
+            video.src = SCREEN_3;
+        } else {
+            video.src = SCREEN_1;
+        }
         video.load();
         // video.play();
         video.currentTime = 0.00;
@@ -479,7 +508,11 @@ document.getElementById("default_blue").addEventListener('click',() => {
 document.getElementById("default_white").addEventListener('click',() => {
     if (currentScreen == 0) {
         currentScreen = 1;
-        video.src = SCREEN_1;
+        if(isMobile) {
+            video.src = SCREEN_3;
+        } else {
+            video.src = SCREEN_1;
+        }
         video.load();
         // video.play();
         video.currentTime = 24.10;
@@ -514,7 +547,11 @@ document.getElementById("default_white").addEventListener('click',() => {
 document.getElementById("default_orange").addEventListener('click',() => {
     if (currentScreen == 0) {
         currentScreen = 1;
-        video.src = SCREEN_1;
+        if(isMobile) {
+            video.src = SCREEN_3;
+        } else {
+            video.src = SCREEN_1;
+        }
         video.load();
         // video.play();
         video.currentTime = 48.10;
@@ -549,7 +586,11 @@ document.getElementById("default_orange").addEventListener('click',() => {
 document.getElementById("default_grey").addEventListener('click',() => {    
     if (currentScreen == 0) {
         currentScreen = 1;
-        video.src = SCREEN_1;
+        if(isMobile) {
+            video.src = SCREEN_3;
+        } else {
+            video.src = SCREEN_1;
+        }
         video.load();
         // video.play();
         video.currentTime = 72.15;
@@ -585,11 +626,11 @@ document.getElementById("default_grey").addEventListener('click',() => {
 document.getElementById("rotateBtn").addEventListener('click',(e) => {    
     if (video.paused) {        
         video.play();
-        document.getElementById("rotateBtn").src = "./img/pause.png";
+        document.getElementById("rotateBtn").src = "/img/pause.png";
         document.getElementById("rotateMsg").innerHTML = "정지";
     } else {
         video.pause();
-        document.getElementById("rotateBtn").src = "./img/play.png";
+        document.getElementById("rotateBtn").src = "/img/play.png";
         document.getElementById("rotateMsg").innerHTML = "재생";
     }
 });
