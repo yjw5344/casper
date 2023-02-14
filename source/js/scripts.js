@@ -2,6 +2,8 @@ const SCREEN_0 = '/video/AX-0000.mp4';
 const SCREEN_1 = '/video/AX-0001.mp4';
 const SCREEN_2 = '/video/AX-0000.webm';
 const SCREEN_3 = '/video/AX-0001.webm';
+const SCREEN_00 = '/video/AX-0000_output.m3u8';
+const SCREEN_01 = '/video/AX-0001_output.m3u8';
 
 let currentColor = '';
 let currentScreen = 0; // 0: 바다 1: 도시(기존)
@@ -12,29 +14,51 @@ let videoWidth;
 let videoHeight;
 
 const video = document.getElementById('confiqurator');
+const hls = new Hls();
 
 // 모바일 체크
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 console.log("isMobile : " + isMobile);
-// if(isMobile) {
-//     video.src = SCREEN_2;
-// }
+if(isMobile) {
+    video.src = SCREEN_00;
+}
 
-// window.onload = function() {
-//     currentColor = 'blue';
-//     document.getElementById('blue').style.backgroundColor = '#b22222';
-//     document.getElementById('blue').style.pointerEvents = 'none';
-//     // document.getElementById('confiqurator').play();
-//     document.getElementById('confiqurator').pause();
+const loadVideo = (videoSrc) => {
+    // HLS 적용
+    if (Hls.isSupported()) {                
+        hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+          console.log('video and hls.js are now bound together !');
+        });
+        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+          console.log(
+            'manifest loaded, found ' + data.levels.length + ' quality level'
+          );
+        });
+        hls.loadSource(videoSrc);
+        // bind them together
+        hls.attachMedia(video);
+    }
+}
 
-//     videoWidth = document.getElementById("confiqurator").offsetWidth;
-//     videoHeight = document.getElementById("confiqurator").offsetHeight;
-//     document.getElementById("panorama").style.width = videoWidth + 'px';
-//     document.getElementById("panorama").style.height = videoHeight + 'px';
+window.onload = function() {    
+    currentColor = 'blue';
+    document.getElementById('blue').style.backgroundColor = '#b22222';
+    document.getElementById('blue').style.pointerEvents = 'none';
 
-//     document.getElementById("panorama").style.display = "none";
-//     load360();
-// }
+    loadVideo(SCREEN_00);
+
+    // document.getElementById('confiqurator').play();        
+    document.getElementById('confiqurator').pause();
+
+    videoWidth = document.getElementById("confiqurator").offsetWidth;
+    videoHeight = document.getElementById("confiqurator").offsetHeight;
+    document.getElementById("panorama").style.width = videoWidth + 'px';
+    document.getElementById("panorama").style.height = videoHeight + 'px';
+
+    document.getElementById("panorama").style.display = "none";
+    load360();
+}
+
 document.addEventListener("DOMContentLoaded", (e) => {
     currentColor = 'blue';
     document.getElementById('blue').style.backgroundColor = '#b22222';
@@ -147,9 +171,7 @@ document.getElementById("blue").addEventListener('click',() => {
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        video.src = SCREEN_0;        
-        video.load();
-        // video.play();
+        loadVideo(SCREEN_00);
         video.currentTime = 0.00;
         video.pause();
         checkPlay();
@@ -182,9 +204,7 @@ document.getElementById("white").addEventListener('click',(e) => {
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        video.src = SCREEN_0;
-        video.load();
-        // video.play();
+        loadVideo(SCREEN_00);        
         video.currentTime = 24.05;
         video.pause();
         checkPlay();
@@ -209,18 +229,16 @@ document.getElementById("orange").addEventListener('click',() => {
     if (currentScreen == 0) {
         let addtimer = 0;
         if (currentColor == 'blue') {
-            addtimer = 48.05;
+            addtimer = 48.08;
         } else if(currentColor == 'white') {
-            addtimer = 24.00;
+            addtimer = 24.02;
         } else if(currentColor == 'grey') {
-            addtimer = -24.05;
+            addtimer = -24.02;
         }    
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        video.src = SCREEN_0;
-        video.load();
-        // video.play();
+        loadVideo(SCREEN_00);
         video.currentTime = 48.05;
         video.pause();
         checkPlay();
@@ -254,9 +272,7 @@ document.getElementById("grey").addEventListener('click',() => {
         video.currentTime = (min*60) + parseFloat(sec) + addtimer;
     } else if (currentScreen == 1) {
         currentScreen = 0;
-        video.src = SCREEN_0;
-        video.load();
-        // video.play();
+        loadVideo(SCREEN_00);
         video.currentTime = 72.10;
         video.pause();
         checkPlay();
@@ -348,7 +364,7 @@ confiqurator.addEventListener('touchstart', (e) => {
     let moveTime = video.currentTime;
     let pivotTime;    
     
-    video.pause();
+    // video.pause();
 
     if (currentColor == "blue" || currentColor == "default_blue") {
         pivotTime = 24.0;
@@ -453,9 +469,7 @@ confiqurator.addEventListener('mouseleave', (e) => {
 document.getElementById("default_blue").addEventListener('click',() => {
     if (currentScreen == 0) {
         currentScreen = 1;
-        video.src = SCREEN_1;
-        video.load();
-        // video.play();
+        loadVideo(SCREEN_01);
         video.currentTime = 0.00;
         video.pause();
         checkPlay();
@@ -488,9 +502,7 @@ document.getElementById("default_blue").addEventListener('click',() => {
 document.getElementById("default_white").addEventListener('click',() => {
     if (currentScreen == 0) {
         currentScreen = 1;
-        video.src = SCREEN_1;
-        video.load();
-        // video.play();
+        loadVideo(SCREEN_01);
         video.currentTime = 24.10;
         video.pause();
         checkPlay();
@@ -523,9 +535,7 @@ document.getElementById("default_white").addEventListener('click',() => {
 document.getElementById("default_orange").addEventListener('click',() => {
     if (currentScreen == 0) {
         currentScreen = 1;
-        video.src = SCREEN_1;
-        video.load();
-        // video.play();
+        loadVideo(SCREEN_01);
         video.currentTime = 48.10;
         video.pause();
         checkPlay();
@@ -558,9 +568,7 @@ document.getElementById("default_orange").addEventListener('click',() => {
 document.getElementById("default_grey").addEventListener('click',() => {    
     if (currentScreen == 0) {
         currentScreen = 1;
-        video.src = SCREEN_1;
-        video.load();
-        // video.play();
+        loadVideo(SCREEN_01);
         video.currentTime = 72.15;
         video.pause();
         checkPlay();
